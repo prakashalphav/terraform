@@ -220,32 +220,31 @@ resource "aws_instance" "private" {
 # #   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
 # #   role       = aws_iam_role.node_group_role.name
 # # }
-#resource "aws_eks_cluster" "eks" {
-#  name     = "EKS"
-#  role_arn = "arn:aws:iam::522820335540:role/AmazonEKSClusterServiceRole"
-#  version  = null
-#  # endpoint_private_access = var.cluster_endpoint_private_access
-#  # endpoint_public_access  = var.cluster_endpoint_public_access
-#  # public_access_cidrs     = var.cluster_endpoint_public_access_cidrs
-#  vpc_config {
-#    subnet_ids = aws_subnet.public[*].id
-#  }
-#}
-#resource "aws_eks_node_group" "ng" {
-#  cluster_name    = aws_eks_cluster.eks.name
-#  node_group_name = "node_group"
-#  node_role_arn   = "arn:aws:iam::522820335540:role/AmazonEKSNodeRole"
-#  subnet_ids      = aws_subnet.public[*].id
-#  scaling_config {
-#    desired_size = 1
-#    max_size     = 3
-#    min_size     = 1
-#  }
-#  update_config {
-#    max_unavailable = 1
-#  }
-#  # depends_on = [
-#  #   aws_iam_role_policy_attachment.Cluster_Policy
-#  # ]
-#}
-#
+resource "aws_eks_cluster" "eks" {
+  name     = "EKS"
+  role_arn = "arn:aws:iam::522820335540:role/AmazonEKSClusterServiceRole"
+  version  = null
+  # endpoint_private_access = var.cluster_endpoint_private_access
+  # endpoint_public_access  = var.cluster_endpoint_public_access
+  # public_access_cidrs     = var.cluster_endpoint_public_access_cidrs
+  vpc_config {
+    subnet_ids = aws_subnet.public[*].id
+  }
+}
+resource "aws_eks_node_group" "ng" {
+  cluster_name    = aws_eks_cluster.eks.name
+  node_group_name = "node_group"
+  node_role_arn   = "arn:aws:iam::522820335540:role/AmazonEKSNodeRole"
+  subnet_ids      = aws_subnet.public[*].id
+  scaling_config {
+    desired_size = 1
+    max_size     = 3
+    min_size     = 1
+  }
+  update_config {
+    max_unavailable = 1
+  }
+  # depends_on = [
+  #   aws_iam_role_policy_attachment.Cluster_Policy
+  # ]
+}
